@@ -1,17 +1,17 @@
 <?php
+	// Database connection
+	$conn = new mysqli('localhost','root','','sanim');
 
-
+if (isset($_POST["btnSubmit"])) {
 	$full_name = $_POST['full_name'];
 	$email = $_POST['email'];
 	$message_text = $_POST['message_text'];
 	
-	// Database connection
-	$conn = new mysqli('localhost','root','','sanim');
 	if($conn->connect_error){
 		echo "$conn->connect_error";
 		die("Connection Failed : ".$conn->connect_error);
 	} else {
-		$stmt = $conn->prepare("insert into contact_me(full_name, email, message_text) values(?, ?, ?)");
+		$stmt = $conn->prepare("insert into contact(full_name, email, message_text) values(?, ?, ?)");
 		$stmt->bind_param("sss", $full_name, $email, $message_text);
 		$execval = $stmt->execute();
 		// echo $execval;
@@ -20,5 +20,5 @@
 		$stmt->close();
 		$conn->close();
 	}
-	
+}
 ?>
